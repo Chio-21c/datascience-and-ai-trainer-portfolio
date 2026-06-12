@@ -1,5 +1,5 @@
 // App.jsx - Complete Working Version
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -8,6 +8,83 @@ import {
   AreaChart, Area, ComposedChart
 } from 'recharts';
 import * as Icons from 'lucide-react';
+
+// --- SEO Meta Tags Helper ---
+const pageMetaTags = {
+  '/': {
+    title: "Joy Wangari | Data Scientist, AI Trainer & Research Specialist",
+    description: "Discover Joy Wangari's expertise in Data Science, Machine Learning, AI Training, Statistical Analysis, and Multilingual NLP. 5+ years of experience transforming data into actionable intelligence.",
+    keywords: "Data Scientist, AI Trainer, Machine Learning, Statistical Analysis, NLP, RLHF, Data Annotation, Research Specialist, Kenya"
+  },
+  '/analytics': {
+    title: "Analytics Lab | Joy Wangari - Data Science Projects",
+    description: "Explore real-world data science and machine learning projects including predictive models, time series forecasting, and business intelligence solutions.",
+    keywords: "Data Science Projects, Machine Learning Models, Analytics, Predictive Modeling, Business Intelligence"
+  },
+  '/ai-training': {
+    title: "AI Training Operations | RLHF & Data Annotation Services",
+    description: "Professional AI training services including RLHF, data annotation, model evaluation, and quality assurance.",
+    keywords: "AI Training, RLHF, Data Annotation, Model Evaluation, Quality Assurance, AI Consulting"
+  },
+  '/statistics': {
+    title: "Statistical Research Center | Research & Analysis Services",
+    description: "Advanced statistical analysis, hypothesis testing, and research methodology consulting.",
+    keywords: "Statistical Analysis, Research Methodology, Hypothesis Testing, Statistical Consulting"
+  },
+  '/bi': {
+    title: "Business Intelligence Studio | BI & Dashboard Services",
+    description: "Executive dashboards, business intelligence solutions, and data visualization.",
+    keywords: "Business Intelligence, Power BI, Tableau, Dashboards, Data Visualization"
+  },
+  '/language': {
+    title: "Language Intelligence Center | Multilingual NLP & Transcription",
+    description: "Multilingual NLP services with expertise in African languages including Swahili.",
+    keywords: "NLP, Swahili Language, African Languages, Speech Recognition, Transcription"
+  },
+  '/writing': {
+    title: "Writing Studio | Technical Writing & Research Publications",
+    description: "Professional technical writing, research paper publication, and documentation services.",
+    keywords: "Technical Writing, Research Papers, Grant Writing, Data Reports, Documentation"
+  },
+  '/services': {
+    title: "Professional Services | Data Science & AI Consulting",
+    description: "Comprehensive consulting services: Data Science, Business Intelligence, AI Training.",
+    keywords: "Consulting Services, Data Science Consulting, AI Consulting, Professional Services"
+  },
+  '/contact': {
+    title: "Get in Touch | Consultation Request - Joy Wangari",
+    description: "Contact Joy Wangari for consultation. Email, WhatsApp, LinkedIn, and phone options available.",
+    keywords: "Contact, Consultation, Email, WhatsApp, LinkedIn, Business Inquiry"
+  }
+};
+
+const updatePageMeta = (pathname) => {
+  const meta = pageMetaTags[pathname] || pageMetaTags['/'];
+  
+  document.title = meta.title;
+  
+  let descMeta = document.querySelector('meta[name="description"]');
+  if (!descMeta) {
+    descMeta = document.createElement('meta');
+    descMeta.setAttribute('name', 'description');
+    document.head.appendChild(descMeta);
+  }
+  descMeta.setAttribute('content', meta.description);
+  
+  let keywordsMeta = document.querySelector('meta[name="keywords"]');
+  if (!keywordsMeta) {
+    keywordsMeta = document.createElement('meta');
+    keywordsMeta.setAttribute('name', 'keywords');
+    document.head.appendChild(keywordsMeta);
+  }
+  keywordsMeta.setAttribute('content', meta.keywords);
+  
+  let ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', meta.title);
+  
+  let ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) ogDesc.setAttribute('content', meta.description);
+};
 
 // --- Mock Data for Visualizations ---
 const automationMetrics = [
@@ -990,6 +1067,11 @@ const MobileHeader = () => {
 // --- Main AppContent Component (runs INSIDE Router) ---
 const AppContent = () => {
   const location = useLocation(); // ✅ Safe - inside Router
+  
+  useEffect(() => {
+    updatePageMeta(location.pathname);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="bg-yellow-50 min-h-screen font-sans antialiased">
