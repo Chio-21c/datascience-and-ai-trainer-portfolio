@@ -1,0 +1,47 @@
+/* src/index.css */
+@import "tailwindcss";
+
+:root {
+  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: JetBrains Mono, Fira Code, monospace;
+  
+  --color-navy-50: #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bccde0;
+  --color-navy-300: #9bb1c4;
+  --color-navy-400: #7a8ea8;
+  --color-navy-500: #5a6d8c;
+  --color-navy-600: #3a4d70;
+  --color-navy-700: #1a2d54;
+  --color-navy-800: #0a1a38;
+  --color-navy-900: #050d1c;
+  
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-gray-200);
+  }
+  
+  body {
+    background-color: #faf8f3;
+    color: var(--color-gray-900);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  ::selection {
+    background-color: var(--color-teal-100);
+    color: var(--color-teal-900);
+  }
+}
